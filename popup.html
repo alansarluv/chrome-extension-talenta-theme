@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Talenta Beautify</title>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <style>
+    body {
+      min-width:250px;
+    }
+    #cext-custom-select {
+      position: relative;
+    }
+
+    #cext-select-placeholder {
+      color: #b4b4b4;
+    }
+
+    #cext-select-input {
+      cursor: pointer;
+      border: 1px solid #777;
+      border-radius: 4px;
+      padding: 8px 16px;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='%23777' d='M6.28178611,7.34112994 C5.98969924,7.04743259 5.5148273,7.04612703 5.22112994,7.33821389 C4.92743259,7.63030076 4.92612703,8.1051727 5.21821389,8.39887006 L9.44490899,12.6488701 C9.73699896,12.9425705 10.2118771,12.9438725 10.5055731,12.6517782 L14.7788781,8.40177816 C15.072571,8.10968687 15.0738694,7.63481492 14.7817782,7.34112195 C14.4896869,7.04742898 14.0148149,7.04613056 13.7211219,7.33822184 L9.9796032,11.0593358 L6.28178611,7.34112994 Z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+
+    .cext-hidden {
+      display: none;
+    }
+
+    #cext-select-menu-active {
+      display: block;
+      border: 1px solid #E7EBF2;
+      border-radius: 3px;
+      margin-top: 5px;
+    }
+
+    .cext-select-item label {
+      cursor: pointer;
+      text-align: left;
+      display: block;
+      padding: 7px 14px;
+    }
+
+    .cext-select-item:hover,
+    .cext-select-item.is-active { background-color: aliceblue; }
+
+    .cext-select-item input { display: none; }
+
+
+  </style>
+  <body>
+    <div id="cext-custom-select">
+      <div id="cext-select-input">
+        <span id="cext-selected-val">Select your favorite theme</span>
+      </div>
+      <div id="cext-select-menu" class="cext-hidden">
+        <form action="" id="cext-form-radio">
+          <div class="cext-select-item">
+              <label>
+                <input type="radio" name="cext-theme" value="Mekari">
+                <span>Mekari</span>
+              </label>
+            </div>
+            <div class="cext-select-item">
+              <label>
+                <input type="radio" name="cext-theme" value="Sleekr">
+                <span>Sleekr</span>
+              </label>
+            </div>
+            <div class="cext-select-item">
+              <label>
+                <input type="radio" name="cext-theme" value="Talenta">
+                <span>Talenta</span>
+              </label>
+            </div>
+            <div class="cext-select-item">
+              <label>
+                <input type="radio" name="cext-theme" value="Jurnal">
+                <span>Jurnal</span>
+              </label>
+            </div>
+            <div class="cext-select-item">
+            <label>
+              <input type="radio" name="cext-theme" value="Klikpajak">
+              <span>Klikpajak</span>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

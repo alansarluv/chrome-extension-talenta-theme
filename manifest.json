@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+
+  "name": "Talenta_Beautify",
+  "description": "This extension changes the style in a talenta page.",
+  "version": "1.0",
+  "icons": {
+    "128": "icon128.png",
+    "48": "icon48.png",
+    "16": "icon16.png"
+  },
+
+  "page_action": {
+    "default_icon": "icon16.png",
+    "default_popup": "popup.html",
+    "default_title": "Talenta_Beautify"
+  },
+
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
+
+  "content_scripts":[
+    {
+      "matches": ["https://hr.talenta.co/*"],
+      "js": ["content.js", "jquery-3.4.1.min.js"],
+      "css": ["content.css"]
+    }
+  ],
+
+  "permissions": [
+    "tabs",
+    "https://hr.talenta.co/*"
+  ]
+}

@@ -12,6 +12,9 @@ $(function(){
     $("input[name='cext-theme']:checked").closest('.cext-select-item').addClass('is-active');
     setThemeStyle(cext_selected_val);
   });
+  $('#cext-checkbox-css').change(function(e){
+    setCustomStyle(e.currentTarget.checked);
+  });
 
   const setThemeStyle = function(val){
     listTheme = {
@@ -27,4 +30,10 @@ $(function(){
       chrome.tabs.sendMessage(tabs[0].id, {todo: "changeColor", clickedColor: selected_color });
     });
   }
+
+  const setCustomStyle = function(val){
+    chrome.tabs.query({active:true,currentWindow: true}, function(tabs){
+      chrome.tabs.sendMessage(tabs[0].id, {todo: "changeCustomStyle", checkboxVal: val });
+    });
+  }  
 });

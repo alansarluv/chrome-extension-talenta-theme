@@ -53,6 +53,19 @@
 
     .cext-select-item input { display: none; }
 
+    #cext-custom-css {
+      margin-top: 10px;
+    }
+
+    label[for='cext-checkbox-css'] {
+      cursor: pointer;
+      display: block;
+      padding: 5px 0 10px;
+    }
+
+    #cext-checkbox-css {
+      cursor: pointer;
+    }
 
   </style>
   <body>
@@ -94,6 +107,11 @@
           </div>
         </form>
       </div>
+    </div>
+    <div id="cext-custom-css">
+      <label for="cext-checkbox-css">
+        <input type="checkbox" name="cext-custom-cb" id="cext-checkbox-css">Use custom css
+      </label>
     </div>
   </body>
 </html>

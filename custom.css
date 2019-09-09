@@ -1,0 +1,15 @@
+.loginBody .row:after {
+  display: table !important;
+}
+.input-field label {
+  top: 0 !important;
+  transform: translateY(-20px);
+  -webkit-transform: translateY(-20px);
+  -moz-transform: translateY(-20px);
+  -ms-transform: translateY(-20px);
+  -o-transform: translateY(-20px);  
+}
+
+.bodyWeb > .dashboard-statusBlock > .container {
+  display: flex;
+}

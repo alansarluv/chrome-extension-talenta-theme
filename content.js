@@ -13,9 +13,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 const $currentUrl = document.baseURI;
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-  if (request.todo == "changeCustomStyle"){
+  if (request.todo == "voiceActivation"){
     const selected_val = request.checkboxVal;
-    changeCustomStyle(selected_val);
+    voiceToggle(selected_val);
   }
 });
 
@@ -62,28 +62,71 @@ const changeColorDom = (selected_color) => {
   // append stylePattern inside main
   $('main .pattern-style').remove();
   $('main').prepend(stylePattern);
+};
+
+const triggerVoice = document.querySelector('.tl-dashboard-header small.text-dark');
+
+const startRecognition = () => {
+  recognition.start();
 }
 
-const changeCustomStyle = (val) => {
+// let SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+let recognition = new webkitSpeechRecognition();
+recognition.continuous = false;
+recognition.lang = 'id-ID';
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+recognition.onresult = function(event) {
+  const rec = event.results[0][0].transcript;
+  const transcript = rec.toLocaleLowerCase();
+  // const confidence = event.results[0][0].confidence;
+  if (transcript.length) {
+    commandRun(transcript);
+  }
+}
+
+const voiceToggle = (val) => {
   if (val) {
-    if ($currentUrl.includes("dashboard")){
-      let el = document.querySelector('.bodyWeb .row .l9');
-      el.classList.remove('l9');
-      el.classList.add('l10');
-
-      el = document.querySelector('.bodyWeb .row .col.l3.pad-r-n.pad-l-n'); 
-      el.classList.remove('l3');
-      el.classList.add('l2');
-    }
+    triggerVoice.addEventListener('click', startRecognition);
   } else {
-    if ($currentUrl.includes("dashboard")){
-      let el = document.querySelector('.bodyWeb .row .l10');
-      el.classList.remove('l10');
-      el.classList.add('l9');
+    triggerVoice.addEventListener('click', startRecognition);
+  }
+}
 
-      el = document.querySelector('.bodyWeb .row .col.l2.pad-r-n.pad-l-n'); 
-      el.classList.remove('l2');
-      el.classList.add('l3');      
+const commandRun = (val) => {
+  console.log("you said : " + val); 
+
+  const splitKey = val.split("luna ");
+  if (splitKey.length > 1) {
+    const commandKey = splitKey[1];
+    if (commandKey.includes("ganti tema")) {
+      const splitCommand = commandKey.split("ganti tema ");
+      const themeValText = splitCommand[1];
+      if (themeValText == "mekari") {
+        changeColorDom("#8763A9");
+      } else if (themeValText == "klikpajak") {
+        changeColorDom("#F57A1E");
+      } else if (themeValText == "talenta") {
+        changeColorDom("#C02A34");
+      } else if (themeValText == "jurnal") {
+        changeColorDom("#009bde");
+      } else if (
+          themeValText == "sneaker" ||
+          themeValText == "speaker" ||
+          themeValText == "flickr"  ||
+          themeValText == "trigger" ||
+          themeValText == "stiker"  ||
+          themeValText == "sliker"
+        ) {
+        changeColorDom("#018E57");
+      }
+    } else if (commandKey.includes("saldo cuti")) {
+      $('.tl-dashboard-right p[data-target="#leaveDetailModal"] i').click()
+    } else if (commandKey.includes("cuti minggu ini")) {
+      $('.tl-dashboard-right .justify-content-between .btn-group .dropdown-menu a')[1].click();
+    } else if (commandKey.includes("cuti hari ini")) {
+      $('.tl-dashboard-right .justify-content-between .btn-group .dropdown-menu a')[0].click();
     }
   }
 }

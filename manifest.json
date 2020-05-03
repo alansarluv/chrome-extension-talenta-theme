@@ -31,6 +31,7 @@
 
   "permissions": [
     "tabs",
-    "https://hr.talenta.co/*"
+    "https://hr.talenta.co/*",
+    "storage"
   ]
 }

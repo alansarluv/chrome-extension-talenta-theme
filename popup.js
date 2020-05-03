@@ -33,7 +33,7 @@ $(function(){
 
   const setCustomStyle = function(val){
     chrome.tabs.query({active:true,currentWindow: true}, function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id, {todo: "changeCustomStyle", checkboxVal: val });
+      chrome.tabs.sendMessage(tabs[0].id, {todo: "voiceActivation", checkboxVal: val });
     });
   }  
 });

@@ -105,12 +105,16 @@ const commandRun = (val) => {
       const themeValText = splitCommand[1];
       if (themeValText == "mekari") {
         changeColorDom("#8763A9");
+        chrome.storage.sync.set({'theme_val': "Mekari"});
       } else if (themeValText == "klikpajak") {
         changeColorDom("#F57A1E");
+        chrome.storage.sync.set({'theme_val': "Klikpajak"});
       } else if (themeValText == "talenta") {
         changeColorDom("#C02A34");
+        chrome.storage.sync.set({'theme_val': "Talenta"});
       } else if (themeValText == "jurnal") {
         changeColorDom("#009bde");
+        chrome.storage.sync.set({'theme_val': "Jurnal"});
       } else if (
           themeValText == "sneaker" ||
           themeValText == "speaker" ||
@@ -120,6 +124,7 @@ const commandRun = (val) => {
           themeValText == "sliker"
         ) {
         changeColorDom("#018E57");
+        chrome.storage.sync.set({'theme_val': "Sleekr"});
       }
     } else if (commandKey.includes("saldo cuti")) {
       $('.tl-dashboard-right p[data-target="#leaveDetailModal"] i').click()

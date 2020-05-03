@@ -20,10 +20,48 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 });
 
 const changeColorDom = (selected_color) => {
-  $('nav.nav2').css("background-color", selected_color);
-  $('nav.nav2 ul li.active').css("background-color", selected_color);
-  $('.bodyWeb .dashboard-outRight').css("background-color", selected_color);
-  $('iframe.intercom-launcher-frame').css("background-color", selected_color)
+  // for intercom
+  $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", selected_color); 
+
+  // for background pattern
+  let stylePattern = `
+    <div
+      class="pattern-style"
+      style="
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 184px;
+        background-color: ${selected_color};
+        z-index: -1;
+      ">
+    </div>`;
+  
+  if (selected_color === '#C02A34') {
+    stylePattern = `
+      <div
+        class="pattern-style"
+        style="
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 184px;
+          background: url(https://talenta.s3-ap-southeast-1.amazonaws.com/assets/images/img_talenta_pattern_red.png);
+          background-repeat: repeat;
+          background-size: 50px;
+          background-color: ${selected_color};
+          z-index: -1;
+        ">
+      </div>`;
+  }
+
+  // append stylePattern inside main
+  $('main .pattern-style').remove();
+  $('main').prepend(stylePattern);
 }
 
 const changeCustomStyle = (val) => {

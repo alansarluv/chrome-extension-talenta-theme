@@ -40,23 +40,32 @@ const changeColorDom = (selected_color) => {
 
   // for intercom
   let loopz = 0;
-  const timeInterval = setInterval(() => {
+  const intercomInterval = setInterval(() => {
     loopz++;
     if ( $('.intercom-lightweight-app-launcher.intercom-launcher').length ) {
       $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", colorId); 
-      clearInterval(timeInterval);
-    } else {
-      if (loopz > 25) {
-        clearInterval(timeInterval);
-      }
+      clearInterval(intercomInterval);
+    } else if (loopz > 25) {
+      clearInterval(intercomInterval);
     }
     $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", colorId); 
   }, 1000);
   
-  // setTimeout(function(){ 
-  //   clearInterval(timeInterval);
-  // }, 15000);
-
+  // for alert div if any 
+  const alertDivInterval = setInterval(() => {
+    loopz++;
+    if ($('#warningPop').length) {
+      $('#warningPop').css("background-color", colorId); 
+      clearInterval(alertDivInterval);
+    } else if ($('#warningpop').length) {
+      $('#warningpop').css("background-color", colorId); 
+      clearInterval(alertDivInterval);
+    } else if (loopz > 15) {
+      clearInterval(alertDivInterval);
+    }
+    $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", colorId); 
+  }, 1000);
+  
   // for background pattern
   let stylePattern = `
     <div

@@ -3,6 +3,14 @@
 // Limitations: can't use all chrome APIs
 
 chrome.runtime.sendMessage({todo: "showPageAction"});
+
+chrome.storage.sync.get('theme_val', function(val){
+  if (val.theme_val) {
+    // init start
+    changeColorDom(val.theme_val);
+  }
+})
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
   if (request.todo == "changeColor"){
     const selected_color = request.clickedColor;
@@ -20,8 +28,34 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 });
 
 const changeColorDom = (selected_color) => {
+  // convert theme text to color
+  const listTheme = {
+    "mekari": "#8763A9",
+    "talenta": "#C02A34",
+    "sleekr": "#018E57",
+    "jurnal": "#009bde",
+    "klikpajak": "#F57A1E"
+  }
+  const colorId = listTheme[selected_color];
+
   // for intercom
-  $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", selected_color); 
+  let loopz = 0;
+  const timeInterval = setInterval(() => {
+    loopz++;
+    if ( $('.intercom-lightweight-app-launcher.intercom-launcher').length ) {
+      $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", colorId); 
+      clearInterval(timeInterval);
+    } else {
+      if (loopz > 25) {
+        clearInterval(timeInterval);
+      }
+    }
+    $('.intercom-lightweight-app-launcher.intercom-launcher').css("background-color", colorId); 
+  }, 1000);
+  
+  // setTimeout(function(){ 
+  //   clearInterval(timeInterval);
+  // }, 15000);
 
   // for background pattern
   let stylePattern = `
@@ -34,12 +68,12 @@ const changeColorDom = (selected_color) => {
         top: 0;
         width: 100%;
         height: 184px;
-        background-color: ${selected_color};
+        background-color: ${colorId};
         z-index: -1;
       ">
     </div>`;
   
-  if (selected_color === '#C02A34') {
+  if (selected_color === 'talenta') {
     stylePattern = `
       <div
         class="pattern-style"
@@ -53,7 +87,7 @@ const changeColorDom = (selected_color) => {
           background: url(https://talenta.s3-ap-southeast-1.amazonaws.com/assets/images/img_talenta_pattern_red.png);
           background-repeat: repeat;
           background-size: 50px;
-          background-color: ${selected_color};
+          background-color: ${colorId};
           z-index: -1;
         ">
       </div>`;
@@ -103,19 +137,7 @@ const commandRun = (val) => {
     if (commandKey.includes("ganti tema")) {
       const splitCommand = commandKey.split("ganti tema ");
       const themeValText = splitCommand[1];
-      if (themeValText == "mekari") {
-        changeColorDom("#8763A9");
-        chrome.storage.sync.set({'theme_val': "Mekari"});
-      } else if (themeValText == "klikpajak") {
-        changeColorDom("#F57A1E");
-        chrome.storage.sync.set({'theme_val': "Klikpajak"});
-      } else if (themeValText == "talenta") {
-        changeColorDom("#C02A34");
-        chrome.storage.sync.set({'theme_val': "Talenta"});
-      } else if (themeValText == "jurnal") {
-        changeColorDom("#009bde");
-        chrome.storage.sync.set({'theme_val': "Jurnal"});
-      } else if (
+      if (
           themeValText == "sneaker" ||
           themeValText == "speaker" ||
           themeValText == "flickr"  ||
@@ -123,8 +145,11 @@ const commandRun = (val) => {
           themeValText == "stiker"  ||
           themeValText == "sliker"
         ) {
-        changeColorDom("#018E57");
-        chrome.storage.sync.set({'theme_val': "Sleekr"});
+        changeColorDom("sleekr");
+        chrome.storage.sync.set({'theme_val': "sleekr"});
+      } else {
+        changeColorDom(themeValText);
+        chrome.storage.sync.set({'theme_val': themeValText});
       }
     } else if (commandKey.includes("saldo cuti")) {
       $('.tl-dashboard-right p[data-target="#leaveDetailModal"] i').click()

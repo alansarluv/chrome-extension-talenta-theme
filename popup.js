@@ -37,17 +37,8 @@ $(function(){
   });
 
   const setThemeStyle = function(val){
-    listTheme = {
-      "Mekari": "#8763A9",
-      "Talenta": "#C02A34",
-      "Sleekr": "#018E57",
-      "Jurnal": "#009bde",
-      "Klikpajak": "#F57A1E"
-    }
-    const selected_color = listTheme[val];
-
     chrome.tabs.query({active:true,currentWindow: true}, function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id, {todo: "changeColor", clickedColor: selected_color });
+      chrome.tabs.sendMessage(tabs[0].id, {todo: "changeColor", clickedColor: val });
     });
   }
 

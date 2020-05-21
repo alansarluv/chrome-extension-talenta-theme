@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 });
 
 const $currentUrl = document.baseURI;
+let $listStyle = [];
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
   if (request.todo == "voiceActivation"){
@@ -63,9 +64,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
       loopz++;
       if ($('#warningPop').length) {
         $('#warningPop').css("background-color", colorId); 
-        clearInterval(alertDivInterval);
-      } else if ($('#warningpop').length) {
-        $('#warningpop').css("background-color", colorId); 
         clearInterval(alertDivInterval);
       } else if (loopz > 15) {
         clearInterval(alertDivInterval);
@@ -119,18 +117,58 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     const cardPanelPayrollItem = $('.card-panel.payrollItem');
     if (cardPanelPayrollItem.length) {
       const styleCustom = `
-        <style>
           .card-panel.payrollItem {
             border-radius: 4px;
           }
           .card-panel.payrollItem:hover {
             background: ${colorId}
           }
-        </style>
       `;
-      $('body').prepend(styleCustom);
-      console.log("ada");
-      // append bunch of style
+      $listStyle.push(styleCustom);
+      appendNewStyle();
+    }
+
+    // for navbar notif theme color if any
+    const navbarTalenta = $('.c-navbar-talenta');
+    const newNavbar = $('#tlv-navbar');
+    if (navbarTalenta.length) {
+      const styleNavbarNotif = `.c-navbar-talenta .c-navbar--right .c-navbar--envelope .c-navbar--notification {background : ${colorId}}`;
+      $listStyle.push(styleNavbarNotif);
+
+      const styleNavbarActive = `
+        .c-navbar-talenta .c-navbar--container .c-navbar--left .c-navbar--listmenu ul li.active::after,
+        .c-navbar-talenta .c-navbar--container .c-navbar--left .c-navbar--listmenu ul li:hover::after {
+          background-color: ${colorId};
+        }`;
+      $listStyle.push(styleNavbarActive);
+
+      appendNewStyle();
+    } else if (newNavbar.length) {
+      const styleNewNavbarNotif = `header.tl-navbar .navbar-right ul li a span.badge-primary {background-color: ${colorId}}`;
+      $listStyle.push(styleNewNavbarNotif);
+      const styleNewNavbarActive = `
+        header.tl-navbar .navbar-left ul.navbar-nav li.nav-item.active::after,
+        header.tl-navbar .navbar-left ul.navbar-nav li.nav-item:hover::after {
+          position: absolute;
+          bottom: -10px;
+          width: 100%;
+          height: 4px;
+          content: "";
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;          
+          background-color: ${colorId}
+        }`;
+      $listStyle.push(styleNewNavbarActive);
+
+      appendNewStyle();
+    }
+
+    // for page with payrollHeader class if any
+    const payrollHeader = $('.payrollHeader');
+    if (payrollHeader.length) {
+      const stylepayrollHeader = `.payrollHeader { background-color: ${colorId}; background-image: none; }`
+      $listStyle.push(stylepayrollHeader);
+      appendNewStyle();
     }
   };
 /* ===============================================
@@ -227,3 +265,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 /* ===============================================
    --------- end of voiceToggle function ---------
 =============================================== */ 
+
+
+/* ===============================================
+  function for add list of style to pages
+=============================================== */ 
+const appendNewStyle = () => {
+  const currentStyle = document.querySelector('style[name="beautify_talenta"]');
+  if (currentStyle) currentStyle.remove();
+  const $finalStyle = "<style name='beautify_talenta'> \n" + $listStyle.join("\n") + "\n </style>";
+  console.log($finalStyle);
+  $('body').prepend($finalStyle);
+}

@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Talenta_Beautify",
-  "description": "This extension changes the style in a talenta page.",
-  "version": "1.1.0",
+  "name": "Tal_Beautify",
+  "description": "This extension changes the style theme in a talenta page.",
+  "version": "1.1.1",
   "icons": {
     "128": "icon128.png",
     "48": "icon48.png",
@@ -13,7 +13,7 @@
   "page_action": {
     "default_icon": "icon16.png",
     "default_popup": "popup.html",
-    "default_title": "Talenta_Beautify"
+    "default_title": "Tal_Beautify"
   },
 
   "background": {
